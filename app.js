@@ -63,7 +63,9 @@ function esc(s) {
 
 $('add').addEventListener('submit', (e) => {
   e.preventDefault();
-  const start = $('start').value ? new Date($('start').value).getTime() : Date.now();
+  let start = $('start').value ? new Date($('start').value).getTime() : Date.now();
+  // iOS가 시작 시각을 분 단위로 채워 넣으면 초가 잘려 0~59초 앞서므로, 1분 이내면 지금으로 맞춘다
+  if (Date.now() - start < 60000) start = Date.now();
   items.push({ id: Date.now().toString(36) + Math.random().toString(36).slice(2, 6), name: $('name').value.trim(), start, best: 0, resets: 0 });
   save();
   $('add').reset();
