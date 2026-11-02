@@ -52,8 +52,8 @@ function tick() {
     card.querySelector('.meta').textContent =
       `최장 ${fmt(Math.max(it.best, ms)).split(' ').slice(0, 2).join(' ')} · 리셋 ${it.resets}회` +
       (next ? ` · 다음 목표 ${next}일` : '');
-    card.querySelector('.badges').textContent =
-      MILESTONES.filter((d) => d <= days).map((d) => `🏅${d}`).join(' ');
+    card.querySelector('.badges').innerHTML = MILESTONES
+      .map((d) => d <= days ? `<span class="done">🏅${d}일</span>` : `<span>${d}일</span>`).join('');
   });
 }
 
