@@ -64,7 +64,7 @@ function esc(s) {
 $('add').addEventListener('submit', (e) => {
   e.preventDefault();
   const start = $('start').value ? new Date($('start').value).getTime() : Date.now();
-  items.push({ id: crypto.randomUUID(), name: $('name').value.trim(), start, best: 0, resets: 0 });
+  items.push({ id: Date.now().toString(36) + Math.random().toString(36).slice(2, 6), name: $('name').value.trim(), start, best: 0, resets: 0 });
   save();
   $('add').reset();
   render();
