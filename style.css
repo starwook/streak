@@ -1,0 +1,24 @@
+:root { --bg: #111418; --card: #1c2128; --text: #e8eaed; --sub: #8b949e; --accent: #4ade80; --danger: #f87171; }
+* { box-sizing: border-box; }
+body {
+  margin: 0; background: var(--bg); color: var(--text);
+  font-family: -apple-system, system-ui, sans-serif;
+  padding: env(safe-area-inset-top) 16px calc(env(safe-area-inset-bottom) + 16px);
+}
+header { padding: 20px 0 8px; }
+h1 { margin: 0; font-size: 24px; }
+#quote { color: var(--sub); margin: 6px 0 0; font-size: 14px; }
+.card { background: var(--card); border-radius: 16px; padding: 16px; margin: 12px 0; }
+.card h2 { margin: 0; font-size: 16px; color: var(--sub); }
+.time { font-size: 30px; font-weight: 700; margin: 8px 0; font-variant-numeric: tabular-nums; color: var(--accent); }
+.meta { color: var(--sub); font-size: 13px; line-height: 1.6; }
+.badges { margin-top: 6px; font-size: 20px; }
+.actions { display: flex; gap: 8px; margin-top: 12px; }
+button, .link { font: inherit; }
+.actions button { flex: 1; padding: 10px; border: 0; border-radius: 10px; background: #2d333b; color: var(--text); }
+.actions .reset { color: var(--danger); }
+#add { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 16px; }
+#add input { flex: 1 1 100%; padding: 12px; border-radius: 10px; border: 1px solid #30363d; background: var(--card); color: var(--text); font-size: 16px; }
+#add button { flex: 1 1 100%; padding: 12px; border: 0; border-radius: 10px; background: var(--accent); color: #052e16; font-weight: 700; }
+footer { display: flex; justify-content: center; gap: 24px; margin-top: 20px; }
+.link { background: none; border: 0; color: var(--sub); font-size: 13px; text-decoration: underline; }
