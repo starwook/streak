@@ -1,5 +1,4 @@
 const KEY = 'abstain.items.v1';
-const MILESTONES = [1, 7, 30, 100, 365];
 const QUOTES = [
   '지금 이 순간이 가장 중요해요.',
   '충동은 파도처럼 지나가요.',
@@ -33,8 +32,12 @@ function render() {
       <h2>${esc(it.name)}</h2>
       <div class="time"></div>
       <div class="meta"></div>
-      <div class="badges"></div>
+      <div class="goal" hidden>
+        <div class="goal-text"></div>
+        <progress max="100"></progress>
+      </div>
       <div class="actions">
+        <button class="setgoal">목표</button>
         <button class="reset">리셋</button>
         <button class="del">삭제</button>
       </div>
@@ -47,13 +50,16 @@ function tick() {
     const it = items.find((x) => x.id === card.dataset.id);
     const ms = elapsed(it);
     const days = ms / DAY;
-    const next = MILESTONES.find((d) => d > days);
     card.querySelector('.time').textContent = fmt(ms);
     card.querySelector('.meta').textContent =
-      `최장 ${fmt(Math.max(it.best, ms)).split(' ').slice(0, 2).join(' ')} · 리셋 ${it.resets}회` +
-      (next ? ` · 다음 목표 ${next}일` : '');
-    card.querySelector('.badges').innerHTML = MILESTONES
-      .map((d) => d <= days ? `<span class="done">🏅${d}일</span>` : `<span>${d}일</span>`).join('');
+      `최장 ${fmt(Math.max(it.best, ms)).split(' ').slice(0, 2).join(' ')} · 리셋 ${it.resets}회`;
+    const goal = card.querySelector('.goal');
+    goal.hidden = !it.goal;
+    if (it.goal) {
+      const pct = Math.min(100, Math.floor(days / it.goal * 100));
+      goal.querySelector('.goal-text').textContent = `${Math.floor(days) + 1}일차 / 목표 ${it.goal}일 · ${pct}%`;
+      goal.querySelector('progress').value = pct;
+    }
   });
 }
 
@@ -66,7 +72,7 @@ $('add').addEventListener('submit', (e) => {
   let start = $('start').value ? new Date($('start').value).getTime() : Date.now();
   // iOS가 시작 시각을 분 단위로 채워 넣으면 초가 잘려 0~59초 앞서므로, 1분 이내면 지금으로 맞춘다
   if (Date.now() - start < 60000) start = Date.now();
-  items.push({ id: Date.now().toString(36) + Math.random().toString(36).slice(2, 6), name: $('name').value.trim(), start, best: 0, resets: 0 });
+  items.push({ id: Date.now().toString(36) + Math.random().toString(36).slice(2, 6), name: $('name').value.trim(), goal: parseInt($('goal').value, 10) || 0, start, best: 0, resets: 0 });
   save();
   $('add').reset();
   render();
@@ -76,7 +82,11 @@ $('list').addEventListener('click', (e) => {
   const card = e.target.closest('.card');
   if (!card) return;
   const it = items.find((x) => x.id === card.dataset.id);
-  if (e.target.classList.contains('reset') && confirm(`'${it.name}' 기록을 리셋할까요?`)) {
+  if (e.target.classList.contains('setgoal')) {
+    const v = prompt('목표 일수 (비우면 해제)', it.goal || '');
+    if (v === null) return;
+    it.goal = parseInt(v, 10) > 0 ? parseInt(v, 10) : 0;
+  } else if (e.target.classList.contains('reset') && confirm(`'${it.name}' 기록을 리셋할까요?`)) {
     it.best = Math.max(it.best, elapsed(it));
     it.resets += 1;
     it.start = Date.now();
