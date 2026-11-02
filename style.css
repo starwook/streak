@@ -12,7 +12,9 @@ h1 { margin: 0; font-size: 24px; }
 .card h2 { margin: 0; font-size: 16px; color: var(--sub); }
 .time { font-size: 30px; font-weight: 700; margin: 8px 0; font-variant-numeric: tabular-nums; color: var(--accent); }
 .meta { color: var(--sub); font-size: 13px; line-height: 1.6; }
-.badges { margin-top: 6px; font-size: 20px; }
+.badges { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 6px; font-size: 14px; color: var(--sub); }
+.badges span { opacity: .4; }
+.badges .done { opacity: 1; color: var(--accent); }
 .actions { display: flex; gap: 8px; margin-top: 12px; }
 button, .link { font: inherit; }
 .actions button { flex: 1; padding: 10px; border: 0; border-radius: 10px; background: #2d333b; color: var(--text); }
