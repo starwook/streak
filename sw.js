@@ -1,4 +1,4 @@
-const CACHE = 'abstain-v5';
+const CACHE = 'abstain-v6';
 const FILES = ['./', 'index.html', 'style.css', 'app.js', 'manifest.webmanifest', 'icon-192.png', 'icon-512.png'];
 
 self.addEventListener('install', (e) => {

@@ -37,7 +37,6 @@ function render() {
         <progress max="100"></progress>
       </div>
       <div class="actions">
-        <button class="setgoal">목표</button>
         <button class="reset">리셋</button>
         <button class="del">삭제</button>
       </div>
@@ -78,19 +77,19 @@ $('add').addEventListener('submit', (e) => {
   render();
 });
 
+function confirm2(msg) {
+  return confirm(msg) && confirm('정말 맞나요? 되돌릴 수 없어요.');
+}
+
 $('list').addEventListener('click', (e) => {
   const card = e.target.closest('.card');
   if (!card) return;
   const it = items.find((x) => x.id === card.dataset.id);
-  if (e.target.classList.contains('setgoal')) {
-    const v = prompt('목표 일수 (비우면 해제)', it.goal || '');
-    if (v === null) return;
-    it.goal = parseInt(v, 10) > 0 ? parseInt(v, 10) : 0;
-  } else if (e.target.classList.contains('reset') && confirm(`'${it.name}' 기록을 리셋할까요?`)) {
+  if (e.target.classList.contains('reset') && confirm2(`'${it.name}' 기록을 리셋할까요?`)) {
     it.best = Math.max(it.best, elapsed(it));
     it.resets += 1;
     it.start = Date.now();
-  } else if (e.target.classList.contains('del') && confirm(`'${it.name}'을(를) 삭제할까요?`)) {
+  } else if (e.target.classList.contains('del') && confirm2(`'${it.name}'을(를) 삭제할까요?`)) {
     items = items.filter((x) => x !== it);
   } else return;
   save();
