@@ -18,11 +18,25 @@
     <p id="quote"></p>
   </header>
 
+  <section id="rank">
+    <div id="face"></div>
+    <div class="rank-info">
+      <div class="rank-title"><span id="badge"></span><b id="rank-name"></b></div>
+      <div class="meta" id="rank-meta"></div>
+      <progress id="rank-bar" max="100"></progress>
+    </div>
+  </section>
+
   <main id="list"></main>
+
+  <dialog id="levelup">
+    <div id="levelup-body"></div>
+    <form method="dialog"><button>확인</button></form>
+  </dialog>
 
   <form id="add">
     <input id="name" placeholder="새 항목 (예: 금연)" required maxlength="20">
-    <input id="goal" type="number" min="1" inputmode="numeric" placeholder="목표 일수 (선택, 예: 30)">
+    <input id="goal" type="number" min="7" required inputmode="numeric" placeholder="목표 일수 (필수, 최소 7일)">
     <input id="start" type="datetime-local">
     <button>추가</button>
   </form>
@@ -32,6 +46,8 @@
     <label class="link">가져오기<input id="import" type="file" accept="application/json" hidden></label>
   </footer>
 
+  <script src="rank.js"></script>
+  <script src="avatar.js"></script>
   <script src="app.js"></script>
 </body>
 </html>
